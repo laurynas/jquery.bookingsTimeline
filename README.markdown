@@ -1,10 +1,16 @@
 jQuery.bookingsTimeline
 ================
 
-Based on excellent [jQuery.ganttView](http://github.com/thegrubbsian/jquery.ganttView/) plugin by Frank (JC) Grubbs.
+Based on excellent [jQuery.ganttView](http://github.com/thegrubbsian/jquery.ganttView/) plugin by Frank (JC) Grubbs and its modification
+[jQuery.bookingsTimeline](https://github.com/laurynas/jquery.bookingsTimeline) by Laurynas Butkus.
 
 The jQuery.bookingsTimeline plugin is a very lightweight plugin for creating a bookings timeline plain HTML...no vector graphics or images required.  
 The plugin supports dragging and resizing the blocks and callbacks to trap the updated data.
+
+This fork adds the following features:
+- dragging between facilities (Y axis)
+- reverting dragging based on condition
+- displaying booking from midday to midday 
 
 
 Browser Compatibility
@@ -28,7 +34,7 @@ of the following license:
 
 The MIT License
 
-Copyright (c) 2011 Laurynas Butkus - laurynas.butkus@gmail.com
+Copyright (c) 2011 Roman Kalyakin - theorm@gmail.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

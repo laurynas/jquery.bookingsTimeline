@@ -24,10 +24,14 @@
 	<div id="bookingsTimeline"></div>
 	<br/><br/>
 	<div id="eventMessage"></div>
+	<br/><br/>
+	<a href="#" id="addRandomBookings">Add random booking</a>
+	<a href="#" id="removeRandomBookings">Remove random booking</a>
 
 	<script type="text/javascript" src="../lib/jquery-1.4.2.js"></script>
 	<script type="text/javascript" src="../lib/date.js"></script>
 	<script type="text/javascript" src="../lib/jquery-ui-1.8.4.js"></script>
+
 	<script type="text/javascript" src="../jquery.bookingsTimeline.js"></script>
 	<script type="text/javascript" src="data.js"></script>
 	<script type="text/javascript">
@@ -35,23 +39,51 @@
 			$("#bookingsTimeline").bookingsTimeline({ 
 				data: timelineData,
 				slideWidth: 900,
-				//focus: 'today',
+				focus: 'today',
 				behavior: {
+//					draggable_axis : "y",
 					onClick: function (data) { 
 						var msg = "You clicked on booking: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
 						$("#eventMessage").text(msg);
 					},
-					onResize: function (data) { 
-						var msg = "You resized booking: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
+					onDblClick: function (data) { 
+						var msg = "You double clicked on booking: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
 						$("#eventMessage").text(msg);
 					},
-					onDrag: function (data) { 
-						var msg = "You dragged booking: { start: " + data.start.toString("M/d/yyyy") + ", end: " + data.end.toString("M/d/yyyy") + " }";
+					onResize: function (oldBooking, newBooking) { 
+						var msg = "You resized booking: { start: " + newBooking.start.toString("M/d/yyyy") + ", end: " + newBooking.end.toString("M/d/yyyy") + " }";
+						$("#eventMessage").text(msg);
+					},
+					onDrag: function (oldBooking, newBooking, oldFacility, newFacility) { 
+						var msg = "You dragged booking " + oldBooking.name + " from " + oldFacility.name + " to " + newFacility.name + ": { start: " + newBooking.start.toString("M/d/yyyy") + ", end: " + newBooking.end.toString("M/d/yyyy") + " }";
+						$("#eventMessage").text(msg);
+						return true;
+					},
+					onNewBooking : function(from,to,facility) {
+						var msg = "New booking requested for " + facility.name + " from " + from + " to " + to;
 						$("#eventMessage").text(msg);
 					}
 				}
 			});
 			
+			$("#addRandomBookings").click(function() {
+				var bookings = [{
+					id: 1, name: "Facility 1", series: [
+						{ id: 21, name: "New Booking 1", start: new Date(2011,01,05), end: new Date(2011,01,07) },
+						{ id: 22, name: "New Booking 2", start: new Date(2011,01,09), end: new Date(2011,01,12), color: "#f0f0f0" }
+					]
+				}];
+				$("#bookingsTimeline").bookingsTimeline('addBookings', bookings);
+
+				return false;
+			});
+			
+			$("#removeRandomBookings").click(function() {
+				var bookings = [21,22];
+				$("#bookingsTimeline").bookingsTimeline('removeBookings', bookings);
+				return false;
+			});
+
 			// $("#bookingsTimeline").bookingsTimeline("setSlideWidth", 600);
 		});
 	</script>
